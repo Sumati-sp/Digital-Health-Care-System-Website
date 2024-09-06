@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style1.css">
+    </head>
+    <body>
+<div class="wrapper">
+        <div class="form-left">
+            <h2 class="text-uppercase">information</h2>
+            <p>
+                By registering with HealthierWe you can keep track of all your health issues and book appointments for your further requirements </p>
+            <p class="text">
+                <span>Our Moto:To Digitalize everyone in the health sector by maintaining the privacy of each individual</span>
+                
+            </p>
+            <div class="form-field">
+                <a href=logform.html><b>"Have an Account?"</b></a>
+            </div>
+        </div>
+        <div class="form-right">
+            <h2 class="text-uppercase">Registration form</h2>
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label>Name</label>
+                    <input type="text" name="name" id="name" class="input-field">
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label>phone no</label>
+                    <input type="number" name="pno" id="pno" class="input-field">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>Your Email</label>
+                <input type="email" id="email" class="input-field" name="email" required>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="input-field">
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label>Confirm Password</label>
+                    <input type="password" name="cpwd" id="cpwd" class="input-field">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="option">I agree to the <a href="#">Terms and Conditions</a>
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-field">
+                <button id="Register" value="Register" class="Register" name="Register">submit</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js";
+        import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjWfIu-UbjaKsHxWrGVkTlwcN_STF8iY8",
+  authDomain: "sumati-18f6c.firebaseapp.com",
+  databaseURL: "https://sumati-18f6c-default-rtdb.firebaseio.com",
+  projectId: "sumati-18f6c",
+  storageBucket: "sumati-18f6c.appspot.com",
+  messagingSenderId: "926328647538",
+  appId: "1:926328647538:web:aa5944aa2a5f4ebc8977eb",
+  measurementId: "G-Y347J8271D"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        Register.addEventListener('click',(e) =>{
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+    set(ref(database, 'users/' + user.uid), {
+    email: email,
+    password: password
+  })
+  .then(() => {
+  // Data saved successfully!
+  alert('Registered Successfully');
+})
+.catch((error) => {
+  // The write failed...
+  alert(error);
+});
+
+
+    
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(errorMessage);
+    // ..
+  });
+           
+});
+
+      </script>
+</body>
+</html>
